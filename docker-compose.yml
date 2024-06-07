@@ -18,15 +18,14 @@ services:
             - redis
         stop_grace_period: 60s
         volumes:
-            - ~/sharelatex_data:/var/lib/overleaf
+            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/data:/var/lib/overleaf
             ########################################################################
             ####  Server Pro: Uncomment the following line to mount the docker  ####
             ####             socket, required for Sibling Containers to work    ####
             ########################################################################
             # - /var/run/docker.sock:/var/run/docker.sock
         environment:
-            OVERLEAF_SECURE_COOKIE: 'true'
-            OVERLEAF_BEHIND_PROXY: 'true'
+
             OVERLEAF_APP_NAME: Overleaf Community Edition
 
             OVERLEAF_MONGO_URL: mongodb://mongo/sharelatex
@@ -51,10 +50,10 @@ services:
             ## Set for SSL via nginx-proxy
             #VIRTUAL_HOST: 103.112.212.22
 
-            # OVERLEAF_SITE_URL: http://overleaf.example.com
-            # OVERLEAF_NAV_TITLE: Overleaf Community Edition
+            OVERLEAF_SITE_URL: http://overleaf.hanisntsolo.com
+            OVERLEAF_NAV_TITLE: Overleaf CE : Hanisntsolo
             # OVERLEAF_HEADER_IMAGE_URL: http://example.com/mylogo.png
-            # OVERLEAF_ADMIN_EMAIL: support@it.com
+            OVERLEAF_ADMIN_EMAIL: ds.pratap1997@gmail.com
 
             # OVERLEAF_LEFT_FOOTER: '[{"text": "Another page I want to link to can be found <a href=\"here\">here</a>"} ]'
             # OVERLEAF_RIGHT_FOOTER: '[{"text": "Hello I am on the Right"} ]'
@@ -104,22 +103,36 @@ services:
 
 
             # OVERLEAF_PROXY_LEARN: "true"
-
+    # This base version of mongo is not working below one is working
+    # mongo:
+    #     restart: always
+    #     image: mongo:5.0
+    #     container_name: mongo
+    #     expose:
+    #         - 27017
+    #     volumes:
+    #         - ~/mongo_data:/data/db
+    #     healthcheck:
+    #         test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
+    #         interval: 10s
+    #         timeout: 10s
+    #         retries: 5
     mongo:
-        restart: always
-        image: mongo:5.0
+        image: bitnami/mongodb:5.0
         container_name: mongo
-        expose:
-            - 27017
-        command: --replSet rs0
+        restart: always
+        ports:
+            - "27017:27017"
         volumes:
-            - ~/mongo_data:/data/db
+            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/mongo_data:/data/db
         healthcheck:
             test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
             interval: 10s
             timeout: 10s
             retries: 5
-
+        environment:
+            MONGODB_REPLICA_SET_MODE: primary
+            ALLOW_EMPTY_PASSWORD: 'yes'
     redis:
         restart: always
         image: redis:6.2
@@ -127,14 +140,14 @@ services:
         expose:
             - 6379
         volumes:
-            - ~/redis_data:/data
+            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/redis_data:/data
 
-    ldap:
-       restart: always
-       image: rroemhild/test-openldap
-       container_name: ldap
-       expose:
-           - 389
+    # ldap:
+    #    restart: always
+    #    image: rroemhild/test-openldap
+    #    container_name: ldap
+    #    expose:
+    #        - 389
 
     # See https://github.com/jwilder/nginx-proxy for documentation on how to configure the nginx-proxy container,
     # and https://github.com/overleaf/overleaf/wiki/HTTPS-reverse-proxy-using-Nginx for an example of some recommended
