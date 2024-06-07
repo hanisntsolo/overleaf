@@ -12,7 +12,7 @@ services:
             redis:
                 condition: service_started
         ports:
-            - 80:80
+            - 19080:80
         links:
             - mongo
             - redis
@@ -25,7 +25,8 @@ services:
             ########################################################################
             # - /var/run/docker.sock:/var/run/docker.sock
         environment:
-
+            OVERLEAF_SECURE_COOKIE: 'true'
+            OVERLEAF_BEHIND_PROXY: 'true'
             OVERLEAF_APP_NAME: Overleaf Community Edition
 
             OVERLEAF_MONGO_URL: mongodb://mongo/sharelatex
@@ -45,7 +46,7 @@ services:
 
             # temporary fix for LuaLaTex compiles
             # see https://github.com/overleaf/overleaf/issues/695
-            TEXMFVAR: /var/lib/overleaf/tmp/texmf-var
+            TEXMFVAR: /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/tmp
 
             ## Set for SSL via nginx-proxy
             #VIRTUAL_HOST: 103.112.212.22
@@ -110,6 +111,7 @@ services:
         container_name: mongo
         expose:
             - 27017
+        command: --replSet rs0
         volumes:
             - ~/mongo_data:/data/db
         healthcheck:
@@ -127,12 +129,12 @@ services:
         volumes:
             - ~/redis_data:/data
 
-    # ldap:
-    #    restart: always
-    #    image: rroemhild/test-openldap
-    #    container_name: ldap
-    #    expose:
-    #        - 389
+    ldap:
+       restart: always
+       image: rroemhild/test-openldap
+       container_name: ldap
+       expose:
+           - 389
 
     # See https://github.com/jwilder/nginx-proxy for documentation on how to configure the nginx-proxy container,
     # and https://github.com/overleaf/overleaf/wiki/HTTPS-reverse-proxy-using-Nginx for an example of some recommended
