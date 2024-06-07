@@ -51,7 +51,7 @@ services:
             #VIRTUAL_HOST: 103.112.212.22
 
             OVERLEAF_SITE_URL: http://overleaf.hanisntsolo.com
-            OVERLEAF_NAV_TITLE: Overleaf CE : Hanisntsolo
+            OVERLEAF_NAV_TITLE: Overleaf CE Hanisntsolo
             # OVERLEAF_HEADER_IMAGE_URL: http://example.com/mylogo.png
             OVERLEAF_ADMIN_EMAIL: ds.pratap1997@gmail.com
 
