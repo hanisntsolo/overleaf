@@ -4,14 +4,18 @@ const DEFAULT_PASSWORD = 'Passw0rd!'
 
 const createdUsers = new Set<string>()
 
-async function createMongoUser({
+export function resetCreatedUsersCache() {
+  createdUsers.clear()
+}
+
+export async function createMongoUser({
   email,
   isAdmin = false,
 }: {
   email: string
   isAdmin?: boolean
 }) {
-  const t0 = Date.now()
+  const t0 = Math.floor(Date.now() / 1000)
   const { stdout } = await runScript({
     cwd: 'services/web',
     script: 'modules/server-ce-scripts/scripts/create-user.js',
@@ -19,7 +23,7 @@ async function createMongoUser({
   })
   const [url] = stdout.match(/\/user\/activate\?token=\S+/)!
   const userId = new URL(url, location.origin).searchParams.get('user_id')!
-  const signupDate = parseInt(userId.slice(0, 8), 16) * 1000
+  const signupDate = parseInt(userId.slice(0, 8), 16)
   if (signupDate < t0) {
     return { url, exists: true }
   }

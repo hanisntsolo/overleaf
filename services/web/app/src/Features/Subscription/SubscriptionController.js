@@ -7,7 +7,6 @@ const Settings = require('@overleaf/settings')
 const logger = require('@overleaf/logger')
 const GeoIpLookup = require('../../infrastructure/GeoIpLookup')
 const FeaturesUpdater = require('./FeaturesUpdater')
-const planFeatures = require('./planFeatures')
 const plansConfig = require('./plansConfig')
 const interstitialPaymentConfig = require('./interstitialPaymentConfig')
 const GroupPlansData = require('./GroupPlansData')
@@ -120,7 +119,6 @@ async function plansPage(req, res) {
     language,
     formatCurrency,
     recommendedCurrency: currency,
-    planFeatures,
     plansConfig,
     groupPlans: GroupPlansData,
     groupPlanModalOptions,
@@ -147,8 +145,35 @@ async function plansPageLightDesign(req, res) {
     return res.redirect(302, '/user/subscription/plans')
   }
 
+  const { currency } = await _getRecommendedCurrency(req, res)
+
+  const language = req.i18n.language || 'en'
+  const currentView = 'annual'
+  const plans = SubscriptionViewModelBuilder.buildPlansList()
+  const groupPlanModalDefaults = _getGroupPlanModalDefaults(req, currency)
+  const formatCurrency = SubscriptionHelper.formatCurrencyDefault
+
+  // TODO: add page view analytics?
   res.render('subscriptions/plans-light-design', {
     title: 'plans_and_pricing',
+    currentView,
+    plans,
+    itm_content: req.query?.itm_content,
+    itm_referrer: req.query?.itm_referrer,
+    itm_campaign: 'plans',
+    language,
+    formatCurrency,
+    recommendedCurrency: currency,
+    plansConfig,
+    groupPlans: GroupPlansData,
+    groupPlanModalOptions,
+    groupPlanModalDefaults,
+    initialLocalizedGroupPrice:
+      SubscriptionHelper.generateInitialLocalizedGroupPrice(
+        currency ?? 'USD',
+        language,
+        formatCurrency
+      ),
   })
 }
 

@@ -1,0 +1,588 @@
+@z-index-plans-new-tabs: 1;
+@z-index-plans-new-tabs-content: 0;
+
+.plans-new-design {
+  .main-heading-section {
+    text-align: center;
+    max-width: 885px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: @screen-xs-max) {
+      text-align: left;
+      padding: 0 16px;
+    }
+
+    .plans-page-heading {
+      margin-top: 8px;
+      margin-bottom: unset;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 64px;
+      @media (max-width: @screen-xs-max) {
+        font-size: 2.25rem;
+        line-height: 48px;
+        padding-right: 5rem;
+      }
+    }
+
+    .plans-page-sub-heading {
+      font-size: 1.125rem;
+      line-height: 24px;
+      margin-top: 16px;
+      margin-bottom: unset;
+    }
+  }
+
+  .plans-new-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: @screen-sm-min) {
+      border-left: 1px solid var(--neutral-20);
+      border-right: 1px solid var(--neutral-20);
+      border-bottom: 1px solid var(--neutral-20);
+      border-radius: 8px;
+    }
+
+    // this is the border between the tabs and the content, specifically on the left and right side
+    // this is necessary to enable top border radius on the plans-new-content
+    &::before {
+      content: '';
+      display: block;
+      z-index: @z-index-plans-new-tabs-content;
+      position: absolute;
+      top: -1px; // make border overlap with the border on .plans-new-tabs
+      width: 100%;
+      height: 20px; // arbitrary height since it's transparent, make sure that it's bigger than border radius
+      background: transparent;
+      border-top: 1px solid var(--neutral-20);
+
+      @media (min-width: @screen-sm-min) {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+  }
+
+  .plans-new-tabs-container {
+    z-index: @z-index-plans-new-tabs;
+
+    // explicit padding to tell that the bottom left and bottom right
+    // does not have bottom border defined in .plans-new-tabs
+    // technically unnecessary because padding is already defined in bootstrap column
+    padding: 0 16px;
+  }
+
+  .plans-new-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--neutral-20);
+
+    .plans-new-tab {
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      border-top-right-radius: 8px;
+      border-top-left-radius: 8px;
+
+      .plans-new-tab-link {
+        border: unset;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--neutral-70);
+        margin: 0;
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+        border: 1px solid var(--neutral-20);
+
+        &:focus {
+          background-color: unset;
+          border: 1px solid var(--emerald-green);
+        }
+
+        &:hover {
+          background-color: var(--neutral-20);
+        }
+
+        // tab navigation focus style
+        &:focus-visible {
+          // https://stackoverflow.com/a/38571103
+          outline: auto 2px Highlight; // firefox
+          outline: auto 5px -webkit-focus-ring-color;
+          background-color: white;
+        }
+      }
+
+      &.active {
+        .plans-new-tab-link {
+          border: 1px solid white;
+          position: relative;
+
+          // remove the border on tab focus
+          &:focus-visible {
+            &::before {
+              content: unset;
+            }
+          }
+
+          &::before {
+            content: '';
+            position: absolute;
+            background: border-box
+              linear-gradient(
+                to bottom,
+                @emerald-green 0%,
+                @neutral-20 85%,
+                @neutral-20 100%
+              );
+            -webkit-mask:
+              linear-gradient(white 0 0) padding-box,
+              linear-gradient(white 0 0);
+            mask:
+              linear-gradient(white 0 0) padding-box,
+              linear-gradient(white 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border: 1px solid transparent;
+            border-bottom: 1px solid white;
+
+            // make the border overlap with the .plans-new-tab-link border
+            top: 0;
+            bottom: -2px;
+            left: -1px;
+            right: -1px;
+          }
+
+          &:hover {
+            background-color: unset;
+          }
+        }
+
+        .plans-new-discount-badge {
+          background-color: #eaf6ef;
+          color: var(--emerald-green);
+        }
+      }
+    }
+  }
+
+  @switcher-container-width: 270px;
+  @switcher-container-height: 44px;
+  @switcher-container-border-radius: @switcher-container-height / 2;
+  @switcher-container-padding: 6px;
+  @switcher-padding-vertical: 2px;
+  @switcher-height: @switcher-container-height - 2 * @switcher-container-padding;
+  @switcher-border-radius: @switcher-height / 2;
+
+  .plans-new-period-switcher-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--neutral-10);
+    width: @switcher-container-width;
+    height: @switcher-container-height;
+    border-radius: @switcher-container-border-radius;
+    padding: @switcher-container-padding;
+    margin-top: @spacing-09;
+    margin-bottom: 40px;
+
+    .plans-new-period-switcher {
+      font-size: var(--font-size-05);
+      font-weight: 600;
+      line-height: var(--line-height-04);
+      text-align: center;
+      padding: 2px 8px;
+      height: @switcher-height;
+      border-radius: @switcher-border-radius;
+      display: flex;
+      align-items: center;
+      border: unset;
+      background-color: unset;
+
+      &:hover {
+        background-color: var(--neutral-20);
+      }
+
+      &.active {
+        background-color: var(--emerald-green);
+        color: white;
+        box-shadow: 0px 2px 4px 0px rgba(30, 37, 48, 0.16);
+
+        .plans-new-discount-badge {
+          background-color: #eaf6ef;
+          color: var(--emerald-green);
+        }
+      }
+
+      .plans-new-discount-badge {
+        margin-left: 6px;
+      }
+    }
+  }
+
+  .plans-new-discount-badge {
+    font-size: var(--font-size-01);
+    font-family: 'DM Mono', monospace;
+    padding: 2px 8px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: var(--neutral-70);
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+
+  .plans-new-tab-content {
+    width: 100%;
+    border: none;
+    padding-top: 0;
+  }
+
+  .plans-new-mobile {
+    display: none;
+
+    @media (max-width: @screen-xs-max) {
+      display: block;
+    }
+  }
+
+  .plans-new-desktop {
+    display: block;
+
+    @media (max-width: @screen-xs-max) {
+      display: none;
+    }
+  }
+
+  .plans-new-table {
+    width: 100%;
+
+    // overrides
+    th {
+      font-weight: normal;
+    }
+
+    // dynamic height on table head
+    thead {
+      tr {
+        height: 100%;
+
+        th {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  @table-4-column-width: 25%;
+
+  // TODO: review the usage of this class
+  // and check whether we can move the rule directly in the .plans-new-table
+  .plans-new-table-4-column {
+    th,
+    td {
+      width: @table-4-column-width;
+    }
+  }
+
+  .plans-new-table-4-column.plans-new-table-student {
+    margin-left: @table-4-column-width / 2;
+  }
+
+  .plans-new-table-group {
+    .plans-new-table-header-grid-container {
+      min-height: 85px;
+    }
+
+    // css specificity issue
+    thead tr th .plans-new-table-header-title {
+      @media (max-width: @screen-md-max) {
+        font-size: var(--font-size-03);
+      }
+    }
+  }
+
+  .plans-new-table-header {
+    padding: @spacing-06 @spacing-08;
+
+    @media (max-width: @screen-md-max) {
+      padding: @spacing-05;
+    }
+  }
+
+  .plans-new-table-header-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+
+    .plans-new-table-header-title {
+      font-size: var(--font-size-05);
+      font-weight: 600;
+      line-height: var(--line-height-04);
+      margin-bottom: @spacing-04;
+      color: var(--neutral-90);
+      text-align: center;
+    }
+
+    .plans-new-table-header-grid-container {
+      display: grid;
+      grid-column-gap: var(--spacing-04);
+      // priceUnitTotal is an optional row
+      grid-template:
+        'nonDiscountedPrice price .' 2fr
+        'priceUnit priceUnit priceUnit' 1fr
+        'priceUnitTotal priceUnitTotal priceUnitTotal' auto / 1fr 1fr 1fr;
+
+      .plans-new-table-header-price {
+        grid-area: price;
+        justify-self: center;
+
+        font-size: var(--font-size-08);
+        font-weight: 600;
+        line-height: var(--line-height-07);
+        color: var(--neutral-90);
+      }
+
+      .plans-new-table-header-price-unit {
+        grid-area: priceUnit;
+        justify-self: center;
+
+        font-size: var(--font-size-02);
+        line-height: var(--line-height-02);
+      }
+
+      .plans-new-table-header-price-unit-total {
+        grid-area: priceUnitTotal;
+        justify-self: center;
+
+        font-size: var(--font-size-01);
+        line-height: var(--line-height-01);
+      }
+
+      .plans-new-table-header-nondiscounted-price {
+        grid-area: nonDiscountedPrice;
+        justify-self: end;
+        align-self: end;
+
+        font-size: var(--font-size-04);
+        line-height: var(--line-height-05);
+        color: var(--neutral-40);
+        font-weight: 600;
+      }
+
+      .plans-new-table-header-icon {
+        // this element should only be placed in the grid
+        // where it's the only element in the grid
+        // the grid-area below will make sure that it covers the whole grid
+        grid-area: ~'span 2 / span 3';
+        justify-self: center;
+
+        font-size: 56px;
+        color: var(--neutral-90);
+      }
+    }
+
+    .plans-new-table-header-desc {
+      margin-top: @spacing-05;
+      margin-bottom: @spacing-08;
+      font-size: var(--font-size-02);
+      line-height: var(--line-height-02);
+    }
+
+    .plans-new-table-button {
+      margin-top: auto;
+    }
+  }
+
+  .faq-heading-container {
+    text-align: center;
+
+    @media (max-width: @screen-xs-max) {
+      text-align: unset;
+    }
+
+    .faq-heading {
+      font-size: 2rem;
+      padding-right: 1rem;
+    }
+  }
+
+  .plans-faq-header-section {
+    text-align: center;
+    max-width: 900px;
+    margin-top: 64px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .website-redesign-ol-tabs {
+      overflow-x: auto;
+
+      @media (max-width: @screen-xs-max) {
+        padding: unset;
+      }
+
+      .nav-tabs {
+        min-width: max-content; // This is for horizontal scrolling
+
+        @media (max-width: @screen-xs-max) {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .plans-faq-questions-section {
+    max-width: 850px;
+    margin: auto;
+
+    .faq-questions-container {
+      @media (max-width: @screen-xs-max) {
+        padding: unset;
+      }
+    }
+
+    .tab-content {
+      border: 0px;
+    }
+  }
+
+  .accordions-container :last-child {
+    border: 0px !important;
+  }
+
+  .accordions-container {
+    .custom-accordion-item {
+      width: 100%;
+      padding-top: 24px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid @neutral-20;
+
+      .custom-accordion-header {
+        text-align: left;
+        width: 100%;
+        font-size: 1.125rem;
+        font-weight: 600;
+        line-height: 24px;
+        color: @neutral-90;
+        background-color: unset;
+        border: unset;
+        display: flex;
+        justify-content: space-between;
+        padding: unset;
+
+        .custom-accordion-icon {
+          display: flex;
+          align-items: center;
+          transition: transform 0.35s ease;
+        }
+
+        &:not(.collapsed) {
+          .custom-accordion-icon {
+            transform: rotate(180deg);
+            transition: transform 0.35s ease;
+          }
+        }
+      }
+
+      .custom-accordion-body {
+        background-color: unset;
+        text-align: left;
+        padding: unset;
+        padding-right: 2rem;
+        margin-top: 8px;
+        font-size: 1rem;
+        line-height: 24px;
+      }
+    }
+  }
+  // ------------------------------------------------------------------
+  // ------------------------------------------------------------------
+  // These comments will be deleted before merging this PR
+  // Below is the styling for plans cards on mobile screen
+
+  .mobile-plans-card-container {
+    width: 100%;
+
+    .mt-spacing-06 {
+      margin-top: @spacing-06;
+    }
+
+    .highlighted-plans-card {
+      border: 2px solid @green-50 !important;
+    }
+
+    .mobile-plans-card {
+      padding: @spacing-09;
+      border: 2px solid @neutral-20;
+      width: 100%; // might need max-width
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+
+      .plans-name {
+        color: @neutral-90;
+        font-size: @font-size-05; // 20px
+        font-weight: 600;
+        line-height: @line-height-04;
+      }
+
+      .old-price {
+        padding: @spacing-04 0 0 0;
+        color: @neutral-40;
+        font-size: @font-size-04; // 18px
+        font-weight: 600;
+        line-height: @line-height-05;
+        margin-bottom: -@spacing-04;
+      }
+
+      .price-container {
+        display: flex;
+        align-items: baseline;
+        .price {
+          color: @neutral-90;
+          font-size: @font-size-08; // 36px
+          font-weight: 600;
+          line-height: @line-height-07;
+          margin-right: @spacing-03;
+        }
+      }
+
+      .light-gray-text {
+        color: @neutral-70;
+        font-size: @font-size-02; // 14px
+        line-height: @line-height-02;
+      }
+
+      .description {
+        .green-round-background {
+          width: 20px;
+          height: 20px;
+        }
+
+        .bullets {
+          list-style-type: none;
+          padding-left: 0;
+          margin-bottom: unset;
+          li {
+            display: flex;
+            margin-top: @spacing-05;
+          }
+        }
+
+        .cta-buy-now {
+          width: 100%;
+          margin-top: @spacing-08;
+          line-height: @line-height-03;
+        }
+      }
+    }
+  }
+  // ------------------------------------------------------------------
+  // ------------------------------------------------------------------
+}

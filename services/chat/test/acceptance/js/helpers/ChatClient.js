@@ -144,3 +144,23 @@ export async function destroyProject(projectId) {
     url: `/project/${projectId}`,
   })
 }
+
+export async function duplicateCommentThreads(projectId, threads) {
+  return await asyncRequest({
+    method: 'post',
+    url: `/project/${projectId}/duplicate-comment-threads`,
+    json: {
+      threads,
+    },
+  })
+}
+
+export async function generateThreadData(projectId, threads) {
+  return await asyncRequest({
+    method: 'post',
+    url: `/project/${projectId}/generate-thread-data`,
+    json: {
+      threads,
+    },
+  })
+}
