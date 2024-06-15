@@ -3,9 +3,11 @@
   "bindIp": "${GIT_BRIDGE_BIND_IP:-0.0.0.0}",
   "idleTimeout": ${GIT_BRIDGE_IDLE_TIMEOUT:-30000},
   "rootGitDirectory": "${GIT_BRIDGE_ROOT_DIR:-/tmp/wlgb}",
-  "apiBaseUrl": "${GIT_BRIDGE_API_BASE_URL:-https://overleaf.hanisntsolo.com/api/v0}",
-  "postbackBaseUrl": "${GIT_BRIDGE_POSTBACK_BASE_URL:-https://overleafgit.hanisntsolo.com}",
+  "apiBaseUrl": "${GIT_BRIDGE_API_BASE_URL:-https://overleafgit.hanisntsolo.com/api/v0}",
+  "postbackBaseUrl": "${GIT_BRIDGE_POSTBACK_BASE_URL:-https://overleaf.hanisntsolo.com}",
   "serviceName": "${GIT_BRIDGE_SERVICE_NAME:-Overleaf}",
+  "username": "${GIT_BRIDGE_USERNAME:-overleaf}",
+  "password": "${GIT_BRIDGE_PASSWORD:-overleaf}",
   "oauth2": {
     "oauth2ClientID": "${GIT_BRIDGE_OAUTH2_CLIENT_ID}",
     "oauth2ClientSecret": "${GIT_BRIDGE_OAUTH2_CLIENT_SECRET}",
