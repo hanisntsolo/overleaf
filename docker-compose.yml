@@ -143,19 +143,19 @@ services:
             - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/redis_data:/data
     
     git-bridge:
-    build:
-      context: ./services/git-bridge
-    container_name: git-bridge
-    restart: always
-    environment:
-      SHARELATEX_MONGO_URL: mongodb://mongo/sharelatex
-      SHARELATEX_REDIS_HOST: redis
-    ports:
-      - "19081:8000"
-    depends_on:
-      - mongo
-      - redis
-      - sharelatex
+        build:
+          context: ./services/git-bridge
+        container_name: git-bridge
+        restart: always
+        environment:
+          SHARELATEX_MONGO_URL: mongodb://mongo/sharelatex
+          SHARELATEX_REDIS_HOST: redis
+        ports:
+          - "19081:8000"
+        depends_on:
+          - mongo
+          - redis
+          - sharelatex
 
     # ldap:
     #    restart: always
