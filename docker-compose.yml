@@ -150,6 +150,16 @@ services:
         environment:
           SHARELATEX_MONGO_URL: mongodb://mongo/sharelatex
           SHARELATEX_REDIS_HOST: redis
+          GIT_BRIDGE_PORT: 8000
+          GIT_BRIDGE_BIND_IP: 0.0.0.0
+          GIT_BRIDGE_IDLE_TIMEOUT: 30000
+          GIT_BRIDGE_ROOT_DIR: /tmp/wlgb
+          GIT_BRIDGE_API_BASE_URL: http://overleaf.hanisntsolo.com/api/v0
+          GIT_BRIDGE_POSTBACK_BASE_URL: http://overleaf.hanisntsolo.com
+          GIT_BRIDGE_SERVICE_NAME: Overleaf
+          GIT_BRIDGE_USER_PASSWORD_ENABLED: true
+          GIT_BRIDGE_REPOSTORE_MAX_FILE_NUM: 2000
+          GIT_BRIDGE_REPOSTORE_MAX_FILE_SIZE: 52428800
         ports:
           - "19081:8000"
         depends_on:
