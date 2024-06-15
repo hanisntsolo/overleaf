@@ -157,6 +157,8 @@ services:
           GIT_BRIDGE_API_BASE_URL: http://overleaf.hanisntsolo.com/api/v0
           GIT_BRIDGE_POSTBACK_BASE_URL: http://overleaf.hanisntsolo.com
           GIT_BRIDGE_SERVICE_NAME: Overleaf
+          GIT_BRIDGE_USERNAME: overleaf
+          GIT_BRIDGE_PASSWORD: overleaf
           GIT_BRIDGE_REPOSTORE_MAX_FILE_NUM: 2000
           GIT_BRIDGE_REPOSTORE_MAX_FILE_SIZE: 52428800
         ports:
