@@ -75,6 +75,10 @@ public class GitBridgeServer {
         );
         jettyServer = new Server();
         configureJettyServer(config, repoStore, snapshotApi);
+        SnapshotAPIRequest.setBasicAuth(
+                config.getUsername(),
+                config.getPassword()
+        );
         apiBaseURL = config.getAPIBaseURL();
         SnapshotAPIRequest.setBaseURL(apiBaseURL);
         Util.setServiceName(config.getServiceName());
