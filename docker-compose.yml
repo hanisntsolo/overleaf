@@ -18,7 +18,7 @@ services:
             - redis
         stop_grace_period: 60s
         volumes:
-            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/data:/var/lib/overleaf
+            - sharelatex-data:/var/lib/overleaf
             ########################################################################
             ####  Server Pro: Uncomment the following line to mount the docker  ####
             ####             socket, required for Sibling Containers to work    ####
@@ -124,7 +124,7 @@ services:
         ports:
             - "27017:27017"
         volumes:
-            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/mongo_data:/data/db
+            - mongo-data:/data/db
         healthcheck:
             test: echo 'db.stats().ok' | mongo localhost:27017/test --quiet
             interval: 10s
@@ -140,7 +140,7 @@ services:
         expose:
             - 6379
         volumes:
-            - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/redis_data:/data
+            - redis-data:/data
     
     git-bridge:
         build:
@@ -161,11 +161,41 @@ services:
           GIT_BRIDGE_REPOSTORE_MAX_FILE_SIZE: 52428800
         ports:
           - "19081:8000"
+        volumes:
+          - git-bridge-data:/tmp/wlgb
         depends_on:
           - mongo
           - redis
           - sharelatex
 
+volumes:
+  mongo-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/mongo_data
+      o: bind
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/redis_data
+      o: bind
+  sharelatex-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/data
+      o: bind
+  git-bridge-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/git-bridge-data
+      o: bind
+
+
+    # Uncomment the following to run a test LDAP server
     # ldap:
     #    restart: always
     #    image: rroemhild/test-openldap
