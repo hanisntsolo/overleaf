@@ -25,7 +25,7 @@ RUN make package \
 
 FROM amazoncorretto:11-alpine
 
-RUN apk add --update --no-cache bash git sqlite procps htop net-tools jemalloc
+RUN apk add --update --no-cache bash git sqlite procps htop net-tools jemalloc curl
 
 ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
