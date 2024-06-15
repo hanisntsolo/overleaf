@@ -1076,6 +1076,8 @@ public class WLGitBridgeIntegrationTest {
                 "    \"apiBaseUrl\": \"http://127.0.0.1:" +
                         apiPort +
                         "/api/v0\",\n" +
+                "    \"username\": \"\",\n" +
+                "    \"password\": \"\",\n" +
                 "    \"postbackBaseUrl\": \"http://127.0.0.1:" +
                         port +
                         "\",\n" +

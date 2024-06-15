@@ -61,6 +61,8 @@ public class BridgeTest {
                         "",
                         "",
                         "",
+                        "",
+                        "",
                         null,
                         false,
                         null,
