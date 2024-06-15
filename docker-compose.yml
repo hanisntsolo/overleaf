@@ -164,7 +164,7 @@ services:
           GIT_BRIDGE_OAUTH2_CLIENT_ID: 264c723c925c13590880751f861f13084934030c13b4452901e73bdfab226edc
           GIT_BRIDGE_OAUTH2_CLIENT_SECRET: v1.G5HHTXfxsJMmfFhSar9QhJLg/u4KpGpYOdPGwoKdZXk=
           GIT_BRIDGE_OAUTH2_SERVER: http://overleaf.hanisntsolo.com
-          GIT_BRIDGE_USER_PASSWORD_ENABLED: 0
+          GIT_BRIDGE_USER_PASSWORD_ENABLED: 1
         ports:
           - "19081:8000"
         volumes:
