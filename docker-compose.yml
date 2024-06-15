@@ -161,6 +161,10 @@ services:
           GIT_BRIDGE_PASSWORD: overleaf
           GIT_BRIDGE_REPOSTORE_MAX_FILE_NUM: 2000
           GIT_BRIDGE_REPOSTORE_MAX_FILE_SIZE: 52428800
+          GIT_BRIDGE_OAUTH2_CLIENT_ID: 264c723c925c13590880751f861f13084934030c13b4452901e73bdfab226edc
+          GIT_BRIDGE_OAUTH2_CLIENT_SECRET: v1.G5HHTXfxsJMmfFhSar9QhJLg/u4KpGpYOdPGwoKdZXk=
+          GIT_BRIDGE_OAUTH2_SERVER: http://overleaf.hanisntsolo.com
+          GIT_BRIDGE_USER_PASSWORD_ENABLED: false
         ports:
           - "19081:8000"
         volumes:
