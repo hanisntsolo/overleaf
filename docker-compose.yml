@@ -143,7 +143,8 @@ services:
             - /media/hanisntsolo/WDBlue_ssd_hanis/docker/volumes/sharelatex/redis_data:/data
     
     git-bridge:
-    image: overleaf/git-bridge
+    build:
+      context: ./services/git-bridge
     container_name: git-bridge
     restart: always
     environment:
